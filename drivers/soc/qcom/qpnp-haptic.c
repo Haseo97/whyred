@@ -2308,7 +2308,7 @@ static void qpnp_timed_enable_worker(struct kthread_work *work)
 	}
 
 	mutex_unlock(&hap->lock);
-	queue_kthread_work(&hap->vibe_kworker, &hap->work);
+	kthread_queue_work(&hap->vibe_kworker, &hap->work);
 }
 
 /* enable interface from timed output class */
@@ -2321,7 +2321,7 @@ static void qpnp_hap_td_enable(struct timed_output_dev *dev, int time_ms)
 	hap->td_time_ms = time_ms;
 	spin_unlock(&hap->td_lock);
 
-	queue_kthread_work(&hap->vibe_kworker, &hap->td_work);
+	kthread_queue_work(&hap->vibe_kworker, &hap->td_work);
 }
 
 /* play pwm bytes */
@@ -2446,7 +2446,7 @@ static enum hrtimer_restart qpnp_hap_timer(struct hrtimer *timer)
 							 hap_timer);
 
 	hap->state = 0;
-	queue_kthread_work(&hap->vibe_kworker, &hap->work);
+	kthread_queue_work(&hap->vibe_kworker, &hap->work);
 
 	return HRTIMER_NORESTART;
 }
@@ -3063,7 +3063,7 @@ static int qpnp_haptic_probe(struct platform_device *pdev)
 	mutex_init(&hap->wf_lock);
 	spin_lock_init(&hap->td_lock);
 
-	init_kthread_worker(&hap->vibe_kworker);
+	kthread_init_worker(&hap->vibe_kworker);
 	hap->vibe_worker_thread = kthread_run(kthread_worker_fn,
 						  &hap->vibe_kworker,
 						  "vibe_thread");
@@ -3077,10 +3077,10 @@ static int qpnp_haptic_probe(struct platform_device *pdev)
 	if (ret)
 		pr_err("Failed to set SCHED_FIFO on kworker, err: %d\n", ret);
 
-	init_kthread_work(&hap->work, qpnp_hap_worker);
+	kthread_init_work(&hap->work, qpnp_hap_worker);
 	INIT_DELAYED_WORK(&hap->sc_work, qpnp_handle_sc_irq);
 	init_completion(&hap->completion);
-	init_kthread_work(&hap->td_work, qpnp_timed_enable_worker);
+	kthread_init_work(&hap->td_work, qpnp_timed_enable_worker);
 
 	hrtimer_init(&hap->hap_timer, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
 	hap->hap_timer.function = qpnp_hap_timer;
