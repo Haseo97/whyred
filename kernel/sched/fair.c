@@ -59,9 +59,8 @@ unsigned int sysctl_sched_cstate_aware = 1;
 unsigned int sysctl_sched_use_walt_cpu_util = 1;
 unsigned int sysctl_sched_use_walt_task_util = 1;
 __read_mostly unsigned int sysctl_sched_walt_cpu_high_irqload =
-	(10 * NSEC_PER_MSEC);
+    (10 * NSEC_PER_MSEC);
 #endif
-
 /*
  * The initial- and re-scaling of tunables is configurable
  * (default SCHED_TUNABLESCALING_LOG = *(1+ilog(ncpus))
@@ -5890,10 +5889,10 @@ static int wake_affine(struct sched_domain *sd, struct task_struct *p,
 static inline unsigned long task_util(struct task_struct *p)
 {
 #ifdef CONFIG_SCHED_WALT
-	if (!walt_disabled && sysctl_sched_use_walt_task_util) {
-		unsigned long demand = p->ravg.demand;
-		return (demand << 10) / walt_ravg_window;
-	}
+       if (!walt_disabled && sysctl_sched_use_walt_task_util) {
+               unsigned long demand = p->ravg.demand;
+               return (demand << 10) / walt_ravg_window;
+       }
 #endif
 	return p->se.avg.util_avg;
 }
