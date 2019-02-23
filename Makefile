@@ -650,6 +650,12 @@ else
 KBUILD_CFLAGS	+= -O3
 endif
 
+ifdef CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE
+KBUILD_CFLAGS   += $(call cc-disable-warning, nonnull)
+KBUILD_CFLAGS   += $(call cc-disable-warning, array-bounds)
+KBUILD_CFLAGS	+= $(call cc-disable-warning, maybe-uninitialized,)
+endif
+
 ifeq ($(cc-name),gcc)
 KBUILD_CFLAGS += -mtune=cortex-a73.cortex-a53 -mcpu=cortex-a73.cortex-a53 -floop-nest-optimize -fgraphite-identity -ftree-loop-distribution
 endif
