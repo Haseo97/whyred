@@ -169,6 +169,6 @@ if test ! "$srctree" -ef .; then
 fi
 
 # CONFIG_LOCALVERSION and LOCALVERSION (if set)
-res="${res}${CONFIG_LOCALVERSION}${LOCALVERSION}-$(date "+%Y%m%d-%H%M")"
+res="${res}${CONFIG_LOCALVERSION}${LOCALVERSION}"
 
 echo "$res"
