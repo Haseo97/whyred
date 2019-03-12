@@ -41,7 +41,8 @@ struct boost_drv {
 
 static struct boost_drv *boost_drv_g __read_mostly;
 
-bool cpu_input_boost_within_timeout(unsigned int input_boost_timeout) {
+bool cpu_input_boost_within_timeout(unsigned int input_boost_timeout)
+{
 	struct boost_drv *b = boost_drv_g;
 
 	if (!b)
