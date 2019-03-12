@@ -1694,7 +1694,6 @@ static inline unsigned long cpu_util(int cpu)
 struct sched_walt_cpu_load {
 	unsigned long prev_window_util;
 	unsigned long nl;
-	unsigned long pl;
 	u64 ws;
 };
 
