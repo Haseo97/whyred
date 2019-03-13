@@ -660,17 +660,6 @@ ifeq ($(cc-name),gcc)
 KBUILD_CFLAGS += -mtune=cortex-a73.cortex-a53 -mcpu=cortex-a73.cortex-a53 -floop-nest-optimize -fgraphite-identity -ftree-loop-distribution
 endif
 
-ifeq ($(cc-name),clang)
-KBUILD_CFLAGS	+= -mllvm -polly \
-		   -mllvm -polly-run-dce \
-		   -mllvm -polly-run-inliner \
-	   	   -mllvm -polly-opt-fusion=max \
-	 	   -mllvm -polly-ast-use-context \
-		   -mllvm -polly-detect-keep-going \
-		   -mllvm -polly-vectorizer=stripmine \
-		   -mllvm -polly-invariant-load-hoisting
-endif
-
 ifdef CONFIG_CC_WERROR
 KBUILD_CFLAGS	+= -Werror
 endif

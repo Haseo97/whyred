@@ -496,17 +496,16 @@
 		};
 
 		dfps_data_mem: dfps_data_mem@0x9f7ff000 {
-		       reg = <0 0x9f7ff000 0 0x00001000>;
-		       label = "dfps_data_mem";
+			reg = <0 0x9f8ff000 0 0x00001000>;
+			label = "dfps_data_mem";
 		};
 
 		pstore_reserve_mem: pstore_reserve_mem_region@0 {
-			linux,reserve-contiguous-region;
-			linux,reserve-region;
-			linux,remove-completely;
-			reg = <0x0 0xA0000000 0x0 0x00400000>;
-			label = "pstore_reserve_mem";
+			compatible = "removed-dma-pool";
+			no-map;
+			reg = <0x0 0x9fe00000 0x0 0x00100000>;
 		};
+
 	};
 
 	bluetooth: bt_wcn3990 {

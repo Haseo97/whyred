@@ -98,6 +98,10 @@
 #if defined(CONFIG_SYSCTL)
 
 /* External variables not in a header file. */
+#ifdef CONFIG_USB
+int deny_new_usb __read_mostly = 0;
+EXPORT_SYMBOL(deny_new_usb);
+#endif
 extern int suid_dumpable;
 #ifdef CONFIG_COREDUMP
 extern int core_uses_pid;
@@ -125,6 +129,7 @@ static int __maybe_unused neg_one = -1;
 static int zero;
 static int __maybe_unused one = 1;
 static int __maybe_unused two = 2;
+static int __maybe_unused three = 3;
 static int __maybe_unused four = 4;
 static unsigned long one_ul = 1;
 static int one_hundred = 100;
@@ -286,6 +291,22 @@ static struct ctl_table kern_table[] = {
 		.mode		= 0644,
 		.proc_handler	= proc_dointvec,
 	},
+#if defined(CONFIG_PREEMPT_TRACER) || defined(CONFIG_IRQSOFF_TRACER)
+	{
+		.procname       = "preemptoff_tracing_threshold_ns",
+		.data           = &sysctl_preemptoff_tracing_threshold_ns,
+		.maxlen         = sizeof(unsigned int),
+		.mode           = 0644,
+		.proc_handler   = proc_dointvec,
+	},
+	{
+		.procname       = "irqsoff_tracing_threshold_ns",
+		.data           = &sysctl_irqsoff_tracing_threshold_ns,
+		.maxlen         = sizeof(unsigned int),
+		.mode           = 0644,
+		.proc_handler   = proc_dointvec,
+	},
+#endif
 #ifdef CONFIG_SCHED_DEBUG
 	{
 		.procname	= "sched_min_granularity_ns",
@@ -342,36 +363,6 @@ static struct ctl_table kern_table[] = {
 		.mode		= 0644,
 		.proc_handler	= proc_dointvec,
 	},
-#ifdef CONFIG_SCHED_WALT
-	{
-		.procname	= "sched_use_walt_cpu_util",
-		.data		= &sysctl_sched_use_walt_cpu_util,
-		.maxlen		= sizeof(unsigned int),
-		.mode		= 0644,
-		.proc_handler	= proc_dointvec,
-	},
-	{
-		.procname	= "sched_use_walt_task_util",
-		.data		= &sysctl_sched_use_walt_task_util,
-		.maxlen		= sizeof(unsigned int),
-		.mode		= 0644,
-		.proc_handler	= proc_dointvec,
-	},
-	{
-		.procname	= "sched_walt_init_task_load_pct",
-		.data		= &sysctl_sched_walt_init_task_load_pct,
-		.maxlen		= sizeof(unsigned int),
-		.mode		= 0644,
-		.proc_handler	= proc_dointvec,
-	},
-	{
-		.procname	= "sched_walt_cpu_high_irqload",
-		.data		= &sysctl_sched_walt_cpu_high_irqload,
-		.maxlen		= sizeof(unsigned int),
-		.mode		= 0644,
-		.proc_handler	= proc_dointvec,
-	},
-#endif
 	{
 		.procname	= "sched_cstate_aware",
 		.data		= &sysctl_sched_cstate_aware,
@@ -398,6 +389,7 @@ static struct ctl_table kern_table[] = {
 		.extra1         = &zero,
 		.extra2		= &three,
 	},
+
 	{
 		.procname	= "sched_tunable_scaling",
 		.data		= &sysctl_sched_tunable_scaling,
@@ -916,6 +908,17 @@ static struct ctl_table kern_table[] = {
 		.proc_handler	= proc_dointvec_minmax_sysadmin,
 		.extra1		= &zero,
 		.extra2		= &two,
+	},
+#endif
+#ifdef CONFIG_USB
+	{
+		.procname	= "deny_new_usb",
+		.data		= &deny_new_usb,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec_minmax_sysadmin,
+		.extra1		= &zero,
+		.extra2		= &one,
 	},
 #endif
 	{
