@@ -28,23 +28,22 @@ struct lzorle_ctx {
 	void *lzorle_comp_mem;
 };
 
-/* static void *lzorle_alloc_ctx(struct crypto_scomp *tfm)
+static void *lzorle_alloc_ctx(struct crypto_scomp *tfm)
 {
 	void *ctx;
 
-	ctx = kvmalloc(LZO1X_MEM_COMPRESS, GFP_KERNEL);
+	ctx = kmalloc(LZO1X_MEM_COMPRESS, GFP_KERNEL);
 	if (!ctx)
 		return ERR_PTR(-ENOMEM);
 
 	return ctx;
-} */
+}
 
 static int lzorle_init(struct crypto_tfm *tfm)
 {
 	struct lzorle_ctx *ctx = crypto_tfm_ctx(tfm);
 
-	ctx->lzorle_comp_mem = kmalloc(LZO1X_MEM_COMPRESS,
-				       GFP_KERNEL | __GFP_NOWARN | __GFP_REPEAT);
+	ctx->lzorle_comp_mem = lzorle_alloc_ctx(NULL);
 	if (IS_ERR(ctx->lzorle_comp_mem))
 		return -ENOMEM;
 
@@ -134,7 +133,7 @@ static struct crypto_alg alg = {
 };
 
 static struct scomp_alg scomp = {
-//	.alloc_ctx		= lzorle_alloc_ctx,
+	.alloc_ctx		= lzorle_alloc_ctx,
 	.free_ctx		= lzorle_free_ctx,
 	.compress		= lzorle_scompress,
 	.decompress		= lzorle_sdecompress,
