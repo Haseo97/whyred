@@ -54,7 +54,6 @@ enum camera_sensor_id{
 enum camera_product_id {
 	PRODUCT_NULL = 0,
 	PRODUCT_WHYRED = 0x15,
-	PRODUCT_WAYNE = 0x17,
 	PRODUCT_MAX
 };
 

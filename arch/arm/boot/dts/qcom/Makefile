@@ -187,11 +187,6 @@ dtb-$(CONFIG_KERNEL_CUSTOM_WHYRED) += \
 	sdm660-mtp_whyred.dtb  \
 	sdm636-mtp_whyred.dtb
 
-dtb-$(CONFIG_KERNEL_CUSTOM_WAYNE) += \
-	sdm636-mtp_wayne.dtb \
-	sdm660-mtp_wayne_a1.dtb \
-	sdm660-mtp_wayne.dtb
-
 dtb-$(CONFIG_ARCH_SDM660) += \
 	#sdm660-mtp.dtb \
 	#sdm660-sim.dtb \

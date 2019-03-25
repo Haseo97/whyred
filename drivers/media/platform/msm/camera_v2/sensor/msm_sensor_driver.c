@@ -1177,13 +1177,13 @@ void msm_sensor_set_sensor_id(struct msm_sensor_ctrl_t *s_ctrl)
 
 	}
 
-	if ((!strcmp("whyred_imx486_ofilm_global_i", s_ctrl->sensordata->sensor_name)) || (!strcmp("whyred_imx486_qtech_global_ii", s_ctrl->sensordata->sensor_name)) || (!strcmp("wayne_imx486_sunny_i", s_ctrl->sensordata->sensor_name)) || (!strcmp("wayne_imx486_ofilm_ii", s_ctrl->sensordata->sensor_name))) {
+	if ((!strcmp("whyred_imx486_ofilm_global_i", s_ctrl->sensordata->sensor_name)) || (!strcmp("whyred_imx486_qtech_global_ii", s_ctrl->sensordata->sensor_name))) {
 		rc = msm_sensor_get_sensor_id_sony_486(s_ctrl, sensor_fusion_id_tmp);
 		if (rc < 0){
 			pr_err("%s:%d litao read sensor %s fusion id failed\n", __func__, __LINE__, s_ctrl->sensordata->sensor_name);
 		}
 	}
-	if ((!strcmp("whyred_imx376_ofilm_global_i", s_ctrl->sensordata->sensor_name)) || (!strcmp("whyred_imx376_sunny_global_ii", s_ctrl->sensordata->sensor_name)) || (!strcmp("wayne_imx376_sunny_back_i", s_ctrl->sensordata->sensor_name)) || (!strcmp("wayne_imx376_ofilm_back_ii", s_ctrl->sensordata->sensor_name)) || (!strcmp("wayne_imx376_sunny_front_i", s_ctrl->sensordata->sensor_name)) || (!strcmp("wayne_imx376_ofilm_front_ii", s_ctrl->sensordata->sensor_name))) {
+	if ((!strcmp("whyred_imx376_ofilm_global_i", s_ctrl->sensordata->sensor_name)) || (!strcmp("whyred_imx376_sunny_global_ii", s_ctrl->sensordata->sensor_name))) {
 		rc = msm_sensor_get_sensor_id_sony_376(s_ctrl, sensor_fusion_id_tmp);
 		if (rc < 0) {
 			pr_err("%s:%d litao read sensor %s fusion id failed\n", __func__, __LINE__, s_ctrl->sensordata->sensor_name);

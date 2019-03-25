@@ -1233,7 +1233,7 @@ static int smblib_hvdcp_hw_inov_dis_vote_callback(struct votable *votable,
 	struct smb_charger *chg = data;
 	int rc;
 
-	#if (defined (CONFIG_KERNEL_CUSTOM_WAYNE) || defined (CONFIG_KERNEL_CUSTOM_WHYRED))
+	#if defined (CONFIG_KERNEL_CUSTOM_WHYRED)
 	disable = 0;
 	#endif
 	if (disable) {
@@ -2630,9 +2630,7 @@ int smblib_get_prop_die_health(struct smb_charger *chg,
 #define SDP_CURRENT_UA			500000
 #define CDP_CURRENT_UA			1500000
 #define DCP_CURRENT_UA               2500000
-#if defined(CONFIG_KERNEL_CUSTOM_WAYNE)
-#define HVDCP_CURRENT_UA		2900000
-#elif defined(CONFIG_KERNEL_CUSTOM_WHYRED)
+#if defined(CONFIG_KERNEL_CUSTOM_WHYRED)
 #define HVDCP_CURRENT_UA		2500000
 #endif
 #define TYPEC_DEFAULT_CURRENT_UA	900000
